@@ -15,7 +15,7 @@ phases:
       - echo Syncing build artifacts to S3...
 
       # Copy dist folder to S3 bucket (sync and delete outdated files)
-      - aws s3 sync dist/apps/${PROJECT_NAME} s3://amcart/amcart-ui/browser --delete
+      - aws s3 sync dist/amcart-ui/browser s3://amcart/amcart-ui --delete
 
       # Create CloudFront invalidation to clear cache
       - aws cloudfront create-invalidation --distribution-id E2XYZABC1234 --paths "/*"
