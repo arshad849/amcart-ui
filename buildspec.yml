@@ -18,7 +18,7 @@ phases:
       - aws s3 sync dist/amcart-ui/browser s3://amcart/amcart-ui --delete
 
       # Create CloudFront invalidation to clear cache
-      - aws cloudfront create-invalidation --distribution-id E2XYZABC1234 --paths "/*"
+      - aws cloudfront create-invalidation --distribution-id E33RSF02A5JA30 --paths "/*"
 
       - echo Application deployment is successfully completed on `date`
 artifacts:
