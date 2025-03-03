@@ -1,0 +1,35 @@
+/* Ensure the body and html take full height */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Main container to stretch to full height */
+  .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure it takes full viewport height */
+    max-width: 100vw;
+  }
+  
+  /* Allow the main content to grow and scroll */
+  .content {
+    flex: 1; /* Makes this section take available space */
+    overflow-y: auto; /* Enables scrolling */
+    /*padding: 20px;  Adds spacing */
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  /* Footer styles */
+  app-footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    position: relative;
+    width: 100%;
+  }
+  

@@ -1,0 +1,34 @@
+.footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0; /* Reduced height */
+    width: 100%;
+    position: relative;
+    font-size: 14px;
+  }
+  
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Adds spacing between links */
+    margin-bottom: 5px; /* Space above copyright */
+  }
+  
+  .footer-link {
+    color: #f8f9fa;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .footer-link:hover {
+    color: #ff9800; /* Highlight on hover */
+  }
+  
+  .copyright {
+    font-size: 12px;
+    margin: 0;
+    opacity: 0.8;
+  }
+  

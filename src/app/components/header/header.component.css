@@ -1,0 +1,224 @@
+/* Dark background for the toolbar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #212121; /* Dark background */
+  color: white;
+  padding: 0 16px;
+  height: 64px;
+}
+
+
+/* Brand logo and name (Clickable) */
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+.logo {
+  height: 40px;
+  margin-right: 8px;
+}
+
+.app-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Mat Select (Category Dropdown) */
+.category-select {
+  width: 150px;
+  margin-left: 20px; 
+  display: flex;
+  align-items: center; /* Centers it vertically */
+  height: 100%; /* Ensures it takes full toolbar height */
+  margin-top: 20px;
+}
+
+.mat-mdc-form-field {
+  display: flex;
+  align-items: center;
+ /* height: 40px;  Adjust if needed */
+}
+
+/* Search bar with AutoComplete */
+.outer-search{
+  max-height: 40px;
+}
+
+.search-bar {
+  flex-grow: 1;
+  max-width: 300px;
+  max-height: 40px;
+  background-color: white;
+  border-radius: 5px;
+  margin-left: 100
+  /* padding-left: 10px; */
+}
+
+.search-bar input {
+  background: transparent;
+}
+
+/* Cart icon styling */
+.cart-icon {
+  color: white;
+  margin-left: 200px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.cart-icon mat-icon {
+  font-size: 28px;
+}
+
+/* User profile icon with menu */
+.user-icon {
+  color: white;
+  font-size: 28px;
+  margin-right: 50px;
+  cursor: pointer;
+}
+
+/* 
+.header {
+    background-color: #343a40 !important;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+
+.header-buttons {
+    display: flex;
+    gap: 10px; 
+    align-items: center;
+  }
+  
+.header-buttons button {
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+.header-buttons button:hover {
+    background-color: #0056b3; 
+  }
+  
+.header-buttons button:active {
+    transform: scale(0.98);
+  }
+  
+.header-buttons .cart {
+    background-color: #28a745; 
+  }
+  
+.header-buttons .cart:hover {
+    background-color: #1e7e34;
+  }
+  
+.header-buttons .signout {
+    background-color: #dc3545; 
+  }
+  
+.header-buttons .signout:hover {
+    background-color: #c82333;
+  }
+
+.dropdown-icon {
+    font-size: 18px;
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+    align-self: center;
+  }
+.account{
+    align-self: center;
+    display: flex;
+    --menu-width: 100px;
+}
+.account[mat-menu-trigger]:hover .dropdown-icon {
+    transform: rotate(180deg);
+    
+  }
+
+
+.custom-menu {
+    min-width: unset !important;
+  }
+  
+  .mat-mdc-menu-panel {
+    width: var(--menu-width) !important;  
+  }
+  
+  
+  .mat-divider {
+    margin: 4px 0;
+    border-color: rgba(0, 0, 0, 0.12);
+  } */
+  
+  
+  /* @media (max-width: 768px) {
+    .header-buttons {
+      flex-direction: column; 
+    }
+  
+    .header-buttons button {
+      width: 100%;
+    }
+  }
+  
+.search{
+    margin-top: 20px;
+    ::ng-deep .search-inner{
+        padding: 10px;
+        font-size: 14px !important;
+        .mat-form-field-label {
+            background-color: white !important; 
+        }
+        background-color: white !important;
+        .mat-mdc-text-field-wrapper {
+            padding-right: 0;
+            background-color: white !important;
+        }
+    }
+    ::ng-deep .search-inner .mat-form-field-label {
+        color: #888 !important; 
+    }
+    
+    
+    ::ng-deep .search-inner .mat-form-field-outline {
+        color: #007bff !important; 
+    }
+} */
+
+/* .search-container {
+  width: 35%;
+  position: relative;
+}
+
+.search-suggestions {
+  top: 40px;
+  left: 0;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+} */
+
+  
+  

@@ -1,0 +1,18 @@
+<div class="product-detail">
+    <button class="arrow left" (click)="prevImage()">&#10094;</button>
+    <img [src]="product.images[currentImageIndex]" alt="{{ product.name }}" class="product-image" />
+    <button class="arrow right" (click)="nextImage()">&#10095;</button>
+    <div class="product-info">
+      <h3>{{ product.name }}</h3>
+      <p class="price">₹{{ product.price }} <span class="old-price">₹{{ product.oldPrice }}</span></p>
+      <p><strong>Color:</strong> {{ product.clour }}</p>
+      <p><strong>Available Sizes:</strong> {{ product.size.join(', ') }}</p>
+      <p><strong>Stock:</strong> {{ product.stock }}</p>
+      <p class="description">{{ product.description }}</p>     
+      <p *ngIf="product.rating"><strong>Rating:</strong> ⭐ {{ product.rating }}/5</p>
+      <div class="mt-auto d-flex gap-4 justify-content-center">
+      <button mat-button color="primary">Add to Cart</button>
+      <button mat-button color="primary">Order Now</button>
+      </div>
+    </div>
+  </div>

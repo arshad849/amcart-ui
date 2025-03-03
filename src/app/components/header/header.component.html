@@ -1,0 +1,182 @@
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    
+    <div class="d-flex align-items-center">
+      
+      <a class="navbar-brand d-flex align-items-center" routerLink="/">
+        <img src="/assets/Icon.jpg" height="35" alt="AmCart Logo" loading="lazy" class="me-2" />
+        <span class="fs-5 fw-bold text-white">AmCart</span>
+      </a>
+
+      
+      <div class="dropdown ms-3">
+        <button class="btn btn-light dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown">
+          Categories
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+          <li *ngFor="let category of categories">
+            <a class="dropdown-item" (click)="filterByCategory(category)">{{ category }}</a>
+          </li>
+        </ul>  
+      </div>
+    </div>
+    
+    <form class="d-flex mx-auto search-container" (submit)="onSearch()">
+      <input
+        class="form-control"
+        type="search"
+        [(ngModel)]="searchQuery"
+        (input)="updateSuggestions()"
+        placeholder="Search for products..."
+        autocomplete="off"
+        name="search"
+      />
+      <button class="btn btn-outline-light ms-2" type="submit">
+        <i class="fas fa-search"></i>
+      </button>
+
+    
+      <ul class="list-group position-absolute w-100 bg-white shadow-sm search-suggestions" *ngIf="suggestions.length > 0">
+        <li class="list-group-item" *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+          {{ suggestion }}
+        </li>
+      </ul>
+    </form>
+
+    <ul class="navbar-nav ms-auto">
+  
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/cart">
+          <i class="fas fa-shopping-cart fa-lg"></i>
+        </a>
+      </li>
+
+
+      <li class="nav-item dropdown ms-3">
+        <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+          <i class="fas fa-user-circle fa-lg"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+          <li><a class="dropdown-item" routerLink="/login">Login</a></li>
+          <li><a class="dropdown-item" routerLink="/register">Register</a></li>
+          <li><a class="dropdown-item text-danger" (click)="onSignOut()">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+</nav> -->
+
+<!-- <mat-toolbar class="header">
+  <button mat-button class="logo" routerLink="/home">
+    <img src="assets/Icon.jpg" alt="AmCart Logo" height="40" />
+    <span>AmCart</span>
+  </button>
+
+  <span class="spacer"></span>
+
+  <mat-form-field class="search-inner" appearance="outline">
+    <mat-label>Search Products</mat-label>
+    <input 
+      type="text" 
+      matInput 
+      [formControl]="searchControl"
+      [matAutocomplete]="auto"
+      (keyup.enter)="onSearch()"
+    />
+  
+    <mat-icon matSuffix>search</mat-icon>
+    
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelect($event)">
+      <mat-option *ngFor="let product of filteredResults" [value]="product">
+        {{ product }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <div class="header-buttons">
+    <button mat-button class="cart"><mat-icon>shopping_cart</mat-icon> Cart</button>
+    <button mat-button [matMenuTriggerFor]="accountMenu" class="account">
+      <mat-icon>person</mat-icon> Account
+      <mat-icon class="dropdown-icon">expand_more</mat-icon>
+    </button>
+
+    <mat-menu #accountMenu="matMenu" class="custom-menu">
+      <button mat-menu-item (click)="onProfile()">
+        <mat-icon>person</mat-icon> Profile
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="onSignIn()" *ngIf="!isLoggedIn">
+        <mat-icon>login</mat-icon> Sign In
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="onRegister()" *ngIf="!isLoggedIn">
+        <mat-icon>person_add</mat-icon> Register
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="onSignOut()" *ngIf="isLoggedIn">
+        <mat-icon>logout</mat-icon> Sign Out
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar> -->
+
+<mat-toolbar class="toolbar">
+  <!-- Brand Logo & Name (Clickable) -->
+  <a routerLink="/home" class="brand">
+    <img src="assets/Icon.jpg" alt="Brand Logo" class="logo">
+    <span class="app-name">AmCart</span>
+  </a>
+
+  <!-- Category Selection -->
+  <mat-form-field appearance="fill" class="category-select">
+    <mat-label>Category</mat-label>
+    <mat-select (selectionChange)="onCategoryChange($event)">
+      <mat-option *ngFor="let category of categories" [value]="category">
+        {{ category }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Search Bar with AutoComplete -->
+<div class="outer-search">
+  <mat-form-field class="search-bar" appearance="outline">
+    <mat-label>Search Products</mat-label>
+    <input 
+      type="text" 
+      matInput 
+      [formControl]="searchControl"
+      [matAutocomplete]="auto"
+      (keyup.enter)="onSearch()"
+    />
+  
+    <mat-icon matSuffix (click)="onSearch()">search</mat-icon>
+  
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelect($event)">
+      <mat-option *ngFor="let product of filteredResults" [value]="product">
+        {{ product }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+
+  <!-- Cart Icon (Clickable) -->
+  <a routerLink="/cart" class="cart-icon">
+    <mat-icon>shopping_cart</mat-icon>
+  </a>
+
+  <!-- User Profile Menu (Dropdown) -->
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item click="">Profile</button>
+    <button mat-menu-item *ngIf="!isLoggedIn" (click)="onSignIn()">Login</button>
+    <button mat-menu-item (click)="onRegister()" *ngIf="!isLoggedIn">Register</button>
+    <button mat-menu-item (click)="onSignOut()" *ngIf="isLoggedIn">Logout</button>
+  </mat-menu>
+
+  <mat-icon mat-icon-button [matMenuTriggerFor]="userMenu" class="user-icon">
+    account_circle
+  </mat-icon>
+</mat-toolbar>
+
+

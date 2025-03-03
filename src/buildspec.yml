@@ -1,0 +1,27 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo Installing dependencies...
+      - npm install
+  build:
+    commands:
+      - echo Building the Angular project...
+      - npm run build --prod
+  post_build:
+    commands:
+      - echo Syncing build artifacts to S3...
+
+      # Copy dist folder to S3 bucket (sync and delete outdated files)
+      - aws s3 sync dist/apps/${PROJECT_NAME} s3://amcart/amcart-ui/browser --delete
+
+      # Create CloudFront invalidation to clear cache
+      - aws cloudfront create-invalidation --distribution-id E2XYZABC1234 --paths "/*"
+
+      - echo Application deployment is successfully completed on `date`
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: no

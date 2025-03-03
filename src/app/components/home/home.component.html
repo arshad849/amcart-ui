@@ -1,0 +1,24 @@
+<div class="home-container">
+  <div class="winter-sales-section text-white text-center py-5">
+    <div class="container">
+      <h1 class="display-3 fw-bold">Winter Sales</h1>
+      <p class="lead">
+        Discover amazing discounts on your favorite products this winter. 
+        Up to <strong>50% OFF</strong> on selected items!
+      </p>
+      <button class="btn btn-light btn-lg mt-3">Shop Now</button>
+    </div>
+  </div>
+    <h4>Newly Launched</h4>
+    <div class="product-grid">
+      <div *ngFor="let product of newProducts" >
+        <app-product-tile [product]="product"></app-product-tile>
+      </div>
+    </div>
+  
+    <!-- <h2>Top Picks of the Week</h2>
+    <div *ngFor="let product of newProducts">
+      <app-product-tile [product]="product"></app-product-tile>
+    </div> -->
+</div>
+  
