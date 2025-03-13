@@ -6,8 +6,10 @@ export const awsConfig = {
     userPoolWebClientId: '110fd7m21dcjtag9cf3i7h0p5e',
     //domain: 'https://ap-south-1hoh6hkkaq.auth.ap-south-1.amazoncognito.com', // Your Cognito Hosted UI domain
     domain: 'https://ap-south-19a2oellah.auth.ap-south-1.amazoncognito.com',
-    redirectUri: 'http://localhost:4200/auth/callback', // Must match Callback URL in Cognito
-    logoutUri: 'http://localhost:4200', // Must match Sign-Out URL in Cognito
+    //redirectUri: 'http://localhost:4200/auth/callback',
+    redirectUri:'https://d1de3c8mspzt29.cloudfront.net/auth/callback',// Must match Callback URL in Cognito
+    //logoutUri: 'http://localhost:4200',
+    logoutUri: 'https://d1de3c8mspzt29.cloudfront.net',// Must match Sign-Out URL in Cognito
     Auth: {
       region: 'us-east-1', // Update with your AWS region
       userPoolId: 'us-east-1_XXXXXXXXX',
