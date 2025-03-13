@@ -41,22 +41,15 @@ export class HeaderComponent implements OnInit {
               private productService: ProductService,
               private router: Router
   ) {
-    console.log('inside header componenet constructor')
     this.authService.updateAuthStatus();
     this.authService.isLoggedIn$.subscribe((status) => {
-      console.log('subscribe : ', status)
       this.isLoggedIn = status;
       if (this.isLoggedIn) {
         this.authService.getUserInfo().then(user => {
           this.userDetails = user;
-          console.log('user details : ', this.userDetails);
-          console.log(this.userDetails.username);
           sessionStorage.setItem('userId', this.userDetails.username);
-          console.log('session user id : ', sessionStorage.getItem('userId'));
-
         })
         .catch(error => console.error("Error getting user details:", error));
-        //this.userDetails = this.authService.getUserInfo();
         
       } else {
         this.userDetails = null;
@@ -70,7 +63,7 @@ export class HeaderComponent implements OnInit {
         debounceTime(300), // Wait 300ms after typing
         distinctUntilChanged(), // Avoid duplicate API calls
         filter((query) => query !== null && query.trim() !== ''),
-        switchMap((query) => this.headerService.searchProducts(query ?? ''))
+        switchMap((query) => this.headerService.autoComplete(query ?? ''))
       )
       .subscribe(
         (results) => {

@@ -3,11 +3,13 @@ import { Product } from '../models/product.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { config } from '../config';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+  baseApi = environment.baseApi;
   private selectedProduct : any;
   private searchedProduct : any[]=[];
   constructor(private http: HttpClient) { }
@@ -144,11 +146,11 @@ export class ProductService {
   }
 
   getProductByLabel(label: String|null): Observable<any> {
-    return this.http.get<any>(`${config.baseApi}/products`);
+    return this.http.get<any>(`${this.baseApi}/products`);
   }
 
   getProductByCategory(label: String|null): Observable<any> {
-    return this.http.get<any>(`${config.baseApi}/products`);
+    return this.http.get<any>(`${this.baseApi}/products`);
   }
 
   setProduct(product: Product){
