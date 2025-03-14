@@ -104,11 +104,17 @@ export class AuthService {
   }
 
   private storeTokens(idToken: string, accessToken: string, refreshToken: string) {
+    const headers = new HttpHeaders({
+      'Origin': 'https://d1de3c8mspzt29.cloudfront.net',
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json, text/plain, */*',
+
+    });
     this.http.post(`${this.apiUrl}/auth/store-token`, {
       idToken,
       accessToken,
       refreshToken,
-    }, { withCredentials: true, responseType: 'text' }).subscribe({
+    }, {headers, withCredentials: true, responseType: 'text' }).subscribe({
       next: () => {
       },
       error: (err) => console.error('Error storing tokens', err),
