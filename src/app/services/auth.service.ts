@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,12 @@ import { environment } from '../../environments/environment';
 export class AuthService {
 
   isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  //isLoggedInSubject : Observable<any>;
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  private user: any;
 
   apiUrl = environment.baseApi;
   
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {
     this.updateAuthStatus();
   }
   
@@ -83,42 +84,81 @@ export class AuthService {
     );
   }
 
-  getUserInfo(): Promise<any> {
-    console.log('getting user')
-    const accessToken = sessionStorage.getItem('access_token');
-    if (!accessToken) {
-      return Promise.reject('No access token found');
-    }
+  // getUserInfo(): Promise<any> {
+  //   const accessToken = this.cookieService.get('access_token');
+  //   if (!accessToken) {
+  //     return Promise.reject('No access token found');
+  //   }
   
-    return fetch(`${awsConfig.domain}/oauth2/userInfo`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((response) => response.json())
-      .catch((error) => console.error('Error fetching user info:', error));
+  //   return fetch(`${awsConfig.domain}/oauth2/userInfo`, {
+  //     headers: {
+  //       Authorization: `Bearer ${accessToken}`,
+  //     },
+  //   })
+  //     .then((response) => this.user=response.json())
+  //     .catch((error) => console.error('Error fetching user info:', error));
+  // }
+
+  getUserInfo(): Promise<any> {
+    return this.http.get<{ access_token?: string }>(`${this.apiUrl}/auth/token`, { withCredentials: true })
+      .toPromise()
+      .then(response => {
+        if (!response || !response.access_token) {
+          return Promise.reject('No access token found');
+        }
+        const accessToken = response.access_token;
+  
+        return fetch(`${awsConfig.domain}/oauth2/userInfo`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch user info: ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('setting user data : ', data)
+        this.user = data;  // Store user info
+        return data;  // Return user data
+      })
+      .catch(error => {
+        console.error('Error fetching user info:', error);
+        return Promise.reject(error);
+      });
   }
+  
 
   updateAuthStatus() {
     this.isAuthenticated().subscribe();
   }
 
   private storeTokens(idToken: string, accessToken: string, refreshToken: string) {
-    const headers = new HttpHeaders({
-      'Origin': 'https://d1de3c8mspzt29.cloudfront.net',
-      'Accept': 'application/json, text/plain, */*',
-      'Content-Type': 'application/json, text/plain, */*',
-
-    });
     this.http.post(`${this.apiUrl}/auth/store-token`, {
+      
       idToken,
       accessToken,
       refreshToken,
-    }, {headers, withCredentials: true, responseType: 'text' }).subscribe({
+    }, {withCredentials: true, responseType: 'text' }).subscribe({
       next: () => {
+        this.getUserInfo();
       },
-      error: (err) => console.error('Error storing tokens', err),
+      error: (err) => {
+        this.getUserInfo();
+        console.error('Error storing tokens', err)
+      }
     });
+  }
+
+  getLoggedInUser(){
+    return this.user;
+  }
+
+  getUserFromDb(id:string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/users/${id}`, { withCredentials: true, responseType: 'text' });
   }
 
 }

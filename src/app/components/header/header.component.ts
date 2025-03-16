@@ -44,16 +44,16 @@ export class HeaderComponent implements OnInit {
     this.authService.updateAuthStatus();
     this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
-      if (this.isLoggedIn) {
-        this.authService.getUserInfo().then(user => {
-          this.userDetails = user;
-          sessionStorage.setItem('userId', this.userDetails.username);
-        })
-        .catch(error => console.error("Error getting user details:", error));
+      // if (this.isLoggedIn) {
+      //   this.authService.getUserInfo().then(user => {
+      //     this.userDetails = user;
+      //     sessionStorage.setItem('userId', this.userDetails.username);
+      //   })
+      //   .catch(error => console.error("Error getting user details:", error));
         
-      } else {
-        this.userDetails = null;
-      }
+      // } else {
+      //   this.userDetails = null;
+      // }
     });
   }
 
@@ -99,7 +99,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onProfile(){
-
+    this.router.navigate(['/profile']);
   }
 
   onSignIn(){
@@ -136,10 +136,10 @@ export class HeaderComponent implements OnInit {
   }
 
   onCategoryChange(event: any) {
-    console.log('Selected Category:', event.value);
     this.productService.getProductByCategory(event.value).subscribe(response=>{
       this.productService.setProductSearchResult(response);
-      this.router.navigate(["/product-list"]);
+      this.router.navigate(['/product-list']);
+      
     },(error)=>{
       console.error(error)
     })

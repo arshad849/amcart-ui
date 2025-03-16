@@ -7,6 +7,12 @@
   color: white;
   padding: 0 16px;
   height: 64px;
+  position: fixed; /* Fixed on top */
+  top: 0;
+  left: 0;
+  width: 100%; /* Ensure full width */
+  z-index: 1000;
+  
 }
 
 

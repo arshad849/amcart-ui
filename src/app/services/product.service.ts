@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { config } from '../config';
 import { environment } from '../../environments/environment';
@@ -12,6 +12,8 @@ export class ProductService {
   baseApi = environment.baseApi;
   private selectedProduct : any;
   private searchedProduct : any[]=[];
+  private productSearchResult = new BehaviorSubject<any[]>([]);
+  productSearchResult$ = this.productSearchResult.asObservable();
   constructor(private http: HttpClient) { }
 
   private products = [
@@ -146,11 +148,11 @@ export class ProductService {
   }
 
   getProductByLabel(label: String|null): Observable<any> {
-    return this.http.get<any>(`${this.baseApi}/products`);
+    return this.http.get<any>(`${this.baseApi}/products/label/${label}`);
   }
 
-  getProductByCategory(label: String|null): Observable<any> {
-    return this.http.get<any>(`${this.baseApi}/products`);
+  getProductByCategory(category: String|null): Observable<any> {
+    return this.http.get<any>(`${this.baseApi}/products/category/${category}`);
   }
 
   setProduct(product: Product){
@@ -163,6 +165,7 @@ export class ProductService {
 
   setProductSearchResult(products: Product[]){
     this.searchedProduct = products;
+    this.productSearchResult.next(products);
   }
 
   getProductSearchResult(){

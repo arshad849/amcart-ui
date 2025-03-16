@@ -1,0 +1,20 @@
+<div class="profile-container">
+    <h2>User Profile</h2>
+  
+    <div *ngIf="loading">Loading...</div>
+  
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  
+    <div *ngIf="userInfo">
+      <p><strong>Name:</strong> {{ userInfo.name }}</p>
+      <p><strong>Email:</strong> {{ userInfo.email }}</p>
+      <p><strong>Username:</strong> {{ userInfo.userId || userInfo.sub }}</p>
+      <p><strong>Phone Number:</strong> {{ userInfo.phoneNumber }}</p>
+  
+      <div *ngIf="userInfo.picture">
+        <img [src]="userInfo.picture" alt="Profile Picture" class="profile-pic">
+      </div>
+    </div>
+  </div>

@@ -5,6 +5,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
 import { CartComponent } from './components/cart/cart.component';
 import { AuthGuard } from './auth.gaurd';
 import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] }, 
@@ -12,5 +13,6 @@ export const routes: Routes = [
   {path: 'auth/callback', component: AuthCallbackComponent},
   { path: 'product', component: ProductDetailComponent },
   { path: 'product-list', component: ProductListComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }, // Default route
 ];

@@ -20,7 +20,7 @@ html, body {
     flex: 1; /* Makes this section take available space */
     overflow-y: auto; /* Enables scrolling */
     /*padding: 20px;  Adds spacing */
-    padding-top: 10px;
+    padding-top: 64px;
     padding-bottom: 10px;
   }
   

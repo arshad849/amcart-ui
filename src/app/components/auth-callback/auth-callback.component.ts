@@ -17,20 +17,13 @@ export class AuthCallbackComponent implements OnInit{
   constructor() {}
 
   async ngOnInit() {
-    console.log('inside call back component')
     this.route.queryParams.subscribe(async (params) => {
       const code = params['code'];
-      console.log('code :'+code)
       if (code) {
         try {
           await this.authService.handleAuthResponse(code);
-          //console.log('Tokens:', tokens);
-          //sessionStorage.setItem('id_token', tokens.id_token);
-          //sessionStorage.setItem('access_token', tokens.access_token);
-          //this.router.navigate(['/home']); // Redirect to dashboard
         } catch (error) {
           console.error('Authentication error:', error);
-          //this.router.navigate(['/login']);
         }
       }
     });
