@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +16,7 @@ export class AuthService {
 
   apiUrl = environment.baseApi;
   
-  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {
+  constructor(private http: HttpClient, private router: Router) {
     this.updateAuthStatus();
   }
   
