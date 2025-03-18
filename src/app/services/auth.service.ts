@@ -27,10 +27,15 @@ export class AuthService {
 
   // Redirect to Cognito Hosted UI for Logout
   logout() {
-    this.http.post(`${this.apiUrl}/auth/logout`, {}).subscribe({
-      next: () => {
-      },
-      error: (err) => console.error('Error Logging out', err),
+    // this.http.post(`${this.apiUrl}/auth/logout`, {}).subscribe({
+    //   next: () => {
+    //   },
+    //   error: (err) => console.error('Error Logging out', err),
+    // });
+    const cookiesToDelete = ["idToken", "accessToken", "refreshToken"];
+
+    cookiesToDelete.forEach(cookieName => {
+      document.cookie = `${cookieName}=; path=/; max-age=0;`;
     });
     this.isLoggedInSubject.next(false);
     window.location.href = `${awsConfig.domain}/logout?client_id=${awsConfig.userPoolWebClientId}&logout_uri=${awsConfig.logoutUri}`;
