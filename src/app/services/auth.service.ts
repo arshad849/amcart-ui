@@ -27,7 +27,7 @@ export class AuthService {
 
   // Redirect to Cognito Hosted UI for Logout
   logout() {
-    this.http.post(`${this.apiUrl}/auth/logout`, {}, {withCredentials: true}).subscribe({
+    this.http.post(`${this.apiUrl}/auth/logout`, {}).subscribe({
       next: () => {
       },
       error: (err) => console.error('Error Logging out', err),
@@ -41,7 +41,7 @@ export class AuthService {
   }
 
   isAuthenticated(): Observable<boolean> {
-    return this.http.get(`${this.apiUrl}/auth/status`, { withCredentials: true, responseType: 'text' }).pipe(
+    return this.http.get(`${this.apiUrl}/auth/status`, { responseType: 'text' }).pipe(
       map((response : any) => {
         const parsedResponse = JSON.parse(response);
         if(parsedResponse.authenticated){
@@ -99,7 +99,7 @@ export class AuthService {
   // }
 
   getUserInfo(): Promise<any> {
-    return this.http.get<{ access_token?: string }>(`${this.apiUrl}/auth/token`, { withCredentials: true })
+    return this.http.get<{ access_token?: string }>(`${this.apiUrl}/auth/token`)
       .toPromise()
       .then(response => {
         if (!response || !response.access_token) {
@@ -141,7 +141,7 @@ export class AuthService {
       idToken,
       accessToken,
       refreshToken,
-    }, {withCredentials: true, responseType: 'text' }).subscribe({
+    }, {responseType: 'text' }).subscribe({
       next: () => {
         this.getUserInfo();
       },
@@ -157,7 +157,7 @@ export class AuthService {
   }
 
   getUserFromDb(id:string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/users/${id}`, { withCredentials: true, responseType: 'text' });
+    return this.http.get(`${this.apiUrl}/users/${id}`, { responseType: 'text' });
   }
 
 }
