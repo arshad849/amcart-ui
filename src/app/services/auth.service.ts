@@ -40,24 +40,35 @@ export class AuthService {
     window.location.href = `${awsConfig.domain}/signup?client_id=${awsConfig.userPoolWebClientId}&response_type=code&scope=openid&redirect_uri=${awsConfig.redirectUri}`
   }
 
-  isAuthenticated(): Observable<boolean> {
-    return this.http.get(`${this.apiUrl}/auth/status`, { responseType: 'text' }).pipe(
-      map((response : any) => {
-        const parsedResponse = JSON.parse(response);
-        if(parsedResponse.authenticated){
-          this.isLoggedInSubject.next(true);
-          return true;
-        }
-        this.isLoggedInSubject.next(false);
-        return false;
+  isAuthenticated(): boolean {
+    // return this.http.get(`${this.apiUrl}/auth/status`, { responseType: 'text' }).pipe(
+    //   map((response : any) => {
+    //     const parsedResponse = JSON.parse(response);
+    //     if(parsedResponse.authenticated){
+    //       this.isLoggedInSubject.next(true);
+    //       return true;
+    //     }
+    //     this.isLoggedInSubject.next(false);
+    //     return false;
         
-      }),
-      catchError(() => {
-        this.isLoggedInSubject.next(false);
-        return of(false);
-      })
-    );
+    //   }),
+    //   catchError(() => {
+    //     this.isLoggedInSubject.next(false);
+    //     return of(false);
+    //   })
+    // );
+    console.log('cookies : ',document.cookie);
+    const result = document.cookie.includes('idToken=');
+    console.log(result);
+    //result : boolean = document.cookie.split('; ').some(cookie => cookie.startsWith('idToken' + '='));
+    this.isLoggedInSubject.next(result);
+    return result;
+    
   }
+
+  hasCookie(cookieName: string): boolean {
+    return document.cookie.split('; ').some(cookie => cookie.startsWith(cookieName + '='));
+}
 
   async handleAuthResponse(code: string) {
     const tokenUrl = `${awsConfig.domain}/oauth2/token`;
@@ -132,24 +143,27 @@ export class AuthService {
   
 
   updateAuthStatus() {
-    this.isAuthenticated().subscribe();
+    this.isAuthenticated();
   }
 
   private storeTokens(idToken: string, accessToken: string, refreshToken: string) {
-    this.http.post(`${this.apiUrl}/auth/store-token`, {
+    document.cookie = `idToken=${idToken}; path=/; Secure`;
+    document.cookie = `accessToken=${accessToken}; path=/; Secure`;
+    document.cookie = `refreshToken=${refreshToken}; path=/; Secure`;
+    // this.http.post(`${this.apiUrl}/auth/store-token`, {
       
-      idToken,
-      accessToken,
-      refreshToken,
-    }, {responseType: 'text' }).subscribe({
-      next: () => {
-        this.getUserInfo();
-      },
-      error: (err) => {
-        this.getUserInfo();
-        console.error('Error storing tokens', err)
-      }
-    });
+    //   idToken,
+    //   accessToken,
+    //   refreshToken,
+    // }, {responseType: 'text' }).subscribe({
+    //   next: () => {
+    //     this.getUserInfo();
+    //   },
+    //   error: (err) => {
+    //     this.getUserInfo();
+    //     console.error('Error storing tokens', err)
+    //   }
+    // });
   }
 
   getLoggedInUser(){
