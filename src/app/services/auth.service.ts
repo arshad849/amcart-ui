@@ -115,35 +115,72 @@ export class AuthService {
   // }
 
   getUserInfo(): Promise<any> {
-    return this.http.get<{ access_token?: string }>(`${this.apiUrl}/auth/token`)
-      .toPromise()
-      .then(response => {
-        if (!response || !response.access_token) {
-          return Promise.reject('No access token found');
-        }
-        const accessToken = response.access_token;
-  
-        return fetch(`${awsConfig.domain}/oauth2/userInfo`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+    return new Promise((resolve, reject) => {
+      // Extract the access_token from document.cookie
+      const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+        const [key, value] = cookie.split('=');
+        acc[key] = value;
+        return acc;
+      }, {} as Record<string, string>);
+    
+      const accessToken = cookies['accessToken'];
+    
+      if (!accessToken) {
+        reject('No access token found');
+        return;
+      }
+    
+      fetch(`${awsConfig.domain}/oauth2/userInfo`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Failed to fetch user info: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('setting user data : ', data);
+          this.user = data; // Store user info
+          resolve(data); // Return user data
+        })
+        .catch(error => {
+          console.error('Error fetching user info:', error);
+          reject(error);
         });
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Failed to fetch user info: ${response.statusText}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('setting user data : ', data)
-        this.user = data;  // Store user info
-        return data;  // Return user data
-      })
-      .catch(error => {
-        console.error('Error fetching user info:', error);
-        return Promise.reject(error);
-      });
+    });
+    
+    // return this.http.get<{ access_token?: string }>(`${this.apiUrl}/auth/token`)
+    //   .toPromise()
+    //   .then(response => {
+    //     if (!response || !response.access_token) {
+    //       return Promise.reject('No access token found');
+    //     }
+    //     const accessToken = response.access_token;
+  
+    //     return fetch(`${awsConfig.domain}/oauth2/userInfo`, {
+    //       headers: {
+    //         Authorization: `Bearer ${accessToken}`,
+    //       },
+    //     });
+    //   })
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       throw new Error(`Failed to fetch user info: ${response.statusText}`);
+    //     }
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     console.log('setting user data : ', data)
+    //     this.user = data;  // Store user info
+    //     return data;  // Return user data
+    //   })
+    //   .catch(error => {
+    //     console.error('Error fetching user info:', error);
+    //     return Promise.reject(error);
+    //   });
   }
   
 

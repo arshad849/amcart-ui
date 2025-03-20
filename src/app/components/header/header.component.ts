@@ -76,14 +76,12 @@ export class HeaderComponent implements OnInit {
   }
 
   onSearch() {
-    
     const query = this.searchControl.value?.trim();
-    console.log("onSearch is called query : ",query)
     if (query) {
       this.headerService.searchProducts(query).subscribe(
         (results) => {
-          console.log('Search results:', results);
           this.productService.setProductSearchResult(results)
+          this.searchControl.reset();
           this.router.navigate(['/product-list'])
         },
         (error) => {
@@ -94,7 +92,8 @@ export class HeaderComponent implements OnInit {
   }
 
   onSelect(event: any) {
-    console.log('Selected product:', event.option.value);
+    //this.searchControl.setValue(event.option.value);
+    this.onSearch();
     // Navigate to product details page if needed
   }
 
