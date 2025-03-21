@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit {
       .pipe(
         debounceTime(300), // Wait 300ms after typing
         distinctUntilChanged(), // Avoid duplicate API calls
-        filter((query) => query !== null && query.trim() !== ''),
+        filter((query) => query !== null && query.trim().length >= 3),
         switchMap((query) => this.headerService.autoComplete(query ?? ''))
       )
       .subscribe(
