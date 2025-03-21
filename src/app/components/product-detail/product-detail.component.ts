@@ -17,10 +17,6 @@ export class ProductDetailComponent {
   constructor(private route: Router, private productService: ProductService) {}
 
   ngOnInit() {
-    //const productId = this.route.snapshot.paramMap.get('id');
-    //console.log('Product Detail - product id : ',productId)
-    //const navigation = this.route.getCurrentNavigation();
-    //this.product = navigation?.extras.state?.['product'];
     this.product=this.productService.getProduct();
     console.log('Product : ',this.product)
   }

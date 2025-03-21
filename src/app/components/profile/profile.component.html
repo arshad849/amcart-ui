@@ -10,7 +10,7 @@
     <div *ngIf="userInfo">
       <p><strong>Name:</strong> {{ userInfo.name }}</p>
       <p><strong>Email:</strong> {{ userInfo.email }}</p>
-      <p><strong>Username:</strong> {{ userInfo.userId || userInfo.sub }}</p>
+      <p><strong>Username:</strong> {{ userInfo.userId }}</p>
       <p><strong>Phone Number:</strong> {{ userInfo.phoneNumber }}</p>
   
       <div *ngIf="userInfo.picture">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit{
   loading: boolean = true;
   error: string | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private cdr: ChangeDetectorRef) {}
   
   ngOnInit(): void {
     this.authService.getUserInfo().then(user=>{
@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit{
           next :user=>{
           this.userInfo = user;
           this.loading = false;
+          this.cdr.detectChanges(); 
           },
           error: (err) => {
             this.error = 'Failed to fetch user details';
