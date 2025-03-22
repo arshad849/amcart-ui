@@ -1,7 +1,7 @@
 <div class="home-container">
   <div class="winter-sales-section text-white text-center py-5">
     <div class="container">
-      <h1 class="display-3 fw-bold">Winter Sales</h1>
+      <h1 class="display-3 fw-bold">Summer Sales</h1>
       <p class="lead">
         Discover amazing discounts on your favorite products this Summer. 
         Up to <strong>50% OFF</strong> on selected items!
@@ -9,7 +9,8 @@
       <button class="btn btn-light btn-lg mt-3">Shop Now</button>
     </div>
   </div>
-    <h4>Newly Launched</h4>
+    <h4 class="newly-launched">Newly Launched</h4>
+
     <div class="product-grid">
       <div *ngFor="let product of newProducts" >
         <app-product-tile [product]="product"></app-product-tile>
