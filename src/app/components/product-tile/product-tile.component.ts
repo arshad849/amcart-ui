@@ -27,10 +27,19 @@ export class ProductTileComponent {
   }
 
   addToCart(productId: String) {
-     const userId = sessionStorage.getItem('userId');
-    if(userId){
-      this.cartService.addToCart(userId, productId);
-      this.router.navigate(['/cart']);
+     //const userId = sessionStorage.getItem('userId');
+     const loggedIn = this.authService.isAuthenticated();
+    if(loggedIn){
+      const user = this.authService.getLoggedInUser();
+      this.cartService.addToCart(user.userId, productId).subscribe({
+        next: (response) => {
+          console.log('Cart item added successfully:', response);
+          this.router.navigate(['/cart']);
+        },
+        error: (error) => {
+          console.error('Error adding to cart:', error);
+        },
+      });
     }else{
       this.authService.login();
     }

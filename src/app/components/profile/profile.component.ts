@@ -17,20 +17,21 @@ export class ProfileComponent implements OnInit{
   constructor(private authService: AuthService,) {}
   
   ngOnInit(): void {
-    this.authService.getUserInfo().then(user=>{
-      if(user){
-        this.authService.getUserFromDb(user.sub).subscribe({
-          next :userData=>{
-          this.userInfo = JSON.parse(userData);
-          this.loading = false;
-          },
-          error: (err) => {
-            this.error = 'Failed to fetch user details';
-            console.error(err);
-            this.loading = false;
-          }
-        });
-      }
-    })
+    // this.authService.getUserInfo().then(user=>{
+    //   if(user){
+    //     this.authService.getUserFromDb(user.sub).subscribe({
+    //       next :userData=>{
+    //       this.userInfo = JSON.parse(userData);
+    //       this.loading = false;
+    //       },
+    //       error: (err) => {
+    //         this.error = 'Failed to fetch user details';
+    //         console.error(err);
+    //         this.loading = false;
+    //       }
+    //     });
+    //   }
+    // })
+    this.userInfo = this.authService.getLoggedInUser();
   }
 }
