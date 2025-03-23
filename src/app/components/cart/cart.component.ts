@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CartService } from '../../services/cart.service';
-import { AuthService } from '../../services/auth.service';
-import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-cart',
@@ -10,14 +8,11 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
-export class CartComponent implements OnInit{
+export class CartComponent {
 
-  cartItems:any;
+  cartItems = JSON.parse(localStorage.getItem('cart') || '[]'); // Retrieve items from local storage
 
-  constructor(private cartService : CartService, private authService: AuthService, private prodService: ProductService) {}
-  ngOnInit(): void {
-    this.getCartItem();
-  }
+  constructor(private cartService : CartService) {}
 
   removeItem(index: number) {
     this.cartItems.splice(index, 1);
@@ -25,20 +20,11 @@ export class CartComponent implements OnInit{
   }
 
   getCartItem(){
-    const user = this.authService.getLoggedInUser()
+    const user = sessionStorage.getItem('userId')
     if(user){
-      this.cartService.getCartItemsForUser(user.userId).subscribe({
-        next: (data) => {
-          this.prodService.getProductById(data.cartItems[0].productId).subscribe({
-            next: (product: any) => {
-              this.cartItems = product;
-            }
-          })
-        },
-        error: (error) => {
-          console.error('Error adding to cart:', error);
-        },
-      })
+      // this.cartService.getCartItemsForUser(user).then((items: any)=>{
+      //   this.cartItems = items;
+      // })
     }
     
   }

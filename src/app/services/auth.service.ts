@@ -20,10 +20,12 @@ export class AuthService {
     this.updateAuthStatus();
   }
   
+  // Redirect to Cognito Hosted UI for Login
   login() {
     window.location.href = `${awsConfig.domain}/login?response_type=code&client_id=${awsConfig.userPoolWebClientId}&redirect_uri=${awsConfig.redirectUri}`;
   }
 
+  // Redirect to Cognito Hosted UI for Logout
   logout() {
     // this.http.post(`${this.apiUrl}/auth/logout`, {}).subscribe({
     //   next: () => {
@@ -60,7 +62,9 @@ export class AuthService {
     //     return of(false);
     //   })
     // );
+    console.log('cookies : ',document.cookie);
     const result = document.cookie.includes('idToken=');
+    console.log(result);
     //result : boolean = document.cookie.split('; ').some(cookie => cookie.startsWith('idToken' + '='));
     this.isLoggedInSubject.next(result);
     return result;
@@ -178,21 +182,7 @@ export class AuthService {
     //     return Promise.reject(error);
     //   });
   }
-
-  setUserInfo(){
-    this.getUserInfo().then(user=>{
-      if(user){
-        this.getUserFromDb(user.sub).subscribe({
-          next :userData=>{
-          this.user = JSON.parse(userData);
-          },
-          error: (err) => {
-            console.error(err);
-          }
-        });
-      }
-    })
-  }
+  
 
   updateAuthStatus() {
     this.isAuthenticated();

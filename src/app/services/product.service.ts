@@ -143,8 +143,8 @@ export class ProductService {
     }
   ]
 
-  getProductById(id: string | null): Observable<any> {
-    return this.http.get<any>(`${this.baseApi}/products/${id}`);
+  getProductById(id: string | null) {
+    return this.products.find(product => product.productId === id);
   }
 
   getProductByLabel(label: String|null): Observable<any> {
